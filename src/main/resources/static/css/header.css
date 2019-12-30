@@ -1,0 +1,11 @@
+@charset "UTF-8";
+ .btn-outline-info, .btn-outline-light, .btn-outline-danger {
+	margin-right: 30px;
+	width: 7em !important;
+	
+}
+
+.navbar-brand{
+	margin-left: 30px;
+}
+

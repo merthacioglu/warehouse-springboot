@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>Kaydol</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+
+<link href="/css/formstyle.css" rel="stylesheet"/>
+<link href="/css/background.css" rel="stylesheet"/>
+<link href="/css/header.css" rel="stylesheet"/>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	
+	
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+		<a class="navbar-brand" href="/">Ürün Deposu</a>
+		<button sec:authorize="isAuthenticated()" class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul sec:authorize="isAuthenticated()" class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="/">Ana Sayfa
+						
+				</a></li>
+				
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Ürün İşlemleri </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="/items/add">Ürün Ekleme</a> <a
+							class="dropdown-item" href="/items">Ürün Listeleme</a> 
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">Üye İşlemleri </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="/users">Üye Listesi Görüntüleme</a>
+					</div></li>
+			</ul>
+		</div>
+		<div class = "justify-content end">
+			<a  sec:authorize="isAnonymous()" href="/login"><button type="button" class="btn btn-outline-info">Üye Girişi</button></a>
+			
+			<form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="post">
+				<button type="button submit" class="btn btn-outline-danger">Çıkış</button>
+			</form>
+		</div>
+	</nav>
+	
+
+	
+	<div class="login-form">
+		<form th:action="@{/signup}" th:object="${user}" method="post">
+			<h2 class="text-center">Bir Hesap Oluşturun</h2>
+			
+			<div class="form-group">
+				<input name="username" th:field="*{username}" type="text" class="form-control"
+					placeholder="Kullanıcı Adı (3-30 Karakter)" >
+					<div class="text-center error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+					<div class="text-center error" th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></div>
+					
+			</div>
+			
+		<div class="form-group">
+				<input name="password" th:field="*{password}" type="password" class="form-control"
+					placeholder="Parola (En az 3 karakter)" >
+					<div class="text-center error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+					
+			</div>
+			
+			
+			<div class="form-group">
+				<input name="name" th:field="*{name}" type="text" class="form-control"
+					placeholder="İsim" >
+				<div class="text-center error"th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+			</div>
+			
+			
+			
+			<div class="form-group">
+				<input name="lastname" th:field="*{lastName}" type="text" class="form-control"
+					placeholder="Soyisim" >
+				<div class="text-center error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+			</div>
+			
+			
+				
+			<div class="form-group">
+				<button type="submit" class="btn btn-success btn-block">Hesap Oluştur</button>
+			</div>
+			
+		</form>
+		<p class="text-center">Hesabınız var mı?</p>
+		<p class="text-center">
+			<a class="text-center" href="/login">Giriş Yapın</a>
+		</p>
+
+	</div>
+	
+	
+</body>
+</html>
