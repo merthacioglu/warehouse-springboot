@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import com.mhacioglu.warehouse.domain.User;
 import com.mhacioglu.warehouse.domain.validator.SignupValidator;
@@ -62,8 +65,11 @@ public class UserController {
 	
 	@RequestMapping(value = "/users/{id}/items")
 	public ModelAndView getUsersItemListPage(@PathVariable("id") long id) {
-		userService.getUserById(id).orElseThrow(NoSuchElementException::new); // id'deki user yoksa exception firlatilir
-		return new ModelAndView("useritemlist", "items", userService.itemNumberByName(id));
+		User user = userService.getUserById(id).orElseThrow(NoSuchElementException::new); // id'deki user yoksa exception firlatilir
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user", user);
+		map.put("items", userService.itemNumberByName(id));
+		return new ModelAndView("useritemlist", map);
 		/*
 		 * verilen id'deki userin itemlerinin goruntulenmesi
 		 * items modelinde itemname - itemlist hashmap'i saklanir.
